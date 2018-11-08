@@ -81,7 +81,7 @@ class Grafo():
         for a in self.listaArestas:
             origem = a.origem.getId()
             destino = a.destino
-            if (origem == v) and (destino.visitado == False):
+            if (origem == v.id) and (destino.visitado == False):
                 adj.append(destino)
                 destino.visitado = True
         
@@ -107,7 +107,7 @@ class Grafo():
     def __buscaLarguraVisita(self, vertice):
         global tempo
         tempo = tempo + 1
-        vertice.Inicio = tempo
+        vertice.entrada = tempo
         vertice.cor = "C"
         adj = self.buscaAdjacentes(vertice)
         for x in adj:
