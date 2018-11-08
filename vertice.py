@@ -1,4 +1,4 @@
-class Vertice:
+class Vertice():
     def __init__(self,id):
         self.id = id
 
@@ -9,4 +9,4 @@ class Vertice:
         self.id = id
     
     def __str__(self):
-        return "Vértice %i" % self.id
+        return "%s" % self.id
