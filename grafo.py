@@ -1,10 +1,10 @@
 from vertice import Vertice
 from aresta import Aresta
 
-
+tempo = 0
 
 class Grafo():
-    def __init__(self, direcionado = False):
+    def __init__(self, direcionado = True):
         self.listaVertices = []
         self.listaArestas = []
         self.direcionado = direcionado
@@ -73,6 +73,22 @@ class Grafo():
                 return a
         return None
 
+    def buscaAdjacentes(self, v):
+        adj = []
+        for u in self.listaVertices:
+            u.visitado = False
+
+        for a in self.listaArestas:
+            origem = a.origem.getId()
+            destino = a.destino
+            if (origem == v) and (destino.visitado == False):
+                adj.append(destino)
+                destino.visitado = True
+        
+        return adj
+
+
+
 
     def __str__(self):
         stringR = "GRAFO\n\n"
@@ -88,12 +104,30 @@ class Grafo():
             stringR += "\n"
         return stringR
     
-    def buscaLargura(self, vertice):
+    def buscaLarguraVisita(self, vertice):
+        global tempo
+        tempo = tempo + 1
+        vertice.Inicio = tempo
+        vertice.cor = "C"
+        adj = self.buscaAdjacentes(vertice)
+        for x in adj:
+            if x.cor == "B":
+                x.pred = vertice
+                self.buscaLarguraVisita(x)
+        vertice.cor = "P"
+        tempo = tempo + 1
+        vertice.saida = tempo
+
+    def buscaLargura(self):
         for v in self.listaVertices:
             v.cor = "B"        # branco: ainda não foi visitado,
                                # cinza já foi visitado mas ainda não terminou o processo, 
                                # preto: já foi visitado e terminou o processo
             v.pred = None
+        for v in self.listaVertices:
+            if v.cor == 'B':
+                self.buscaLarguraVisita(v)
+          
 
 g = Grafo()
 g.insereVertice("MARIA")
@@ -106,10 +140,15 @@ g.insereAresta("MARIA","JOANA")
 g.insereAresta("PEDRO","JOANA")
 g.insereAresta("PEDRO","LUIZ")
 
-print(g.buscaAresta("MARIA", "PEDRO"))
+# print(g.buscaAresta("MARIA", "PEDRO"))
 # g.bus
 # g.buscaLargura("MARIA")
-g.busca
+
 
 print(g)
+# adj = g.buscaAdjacentes("PEDRO")
+g.buscaLargura()
+
+
+
 
