@@ -149,6 +149,7 @@ g.insereAresta("MARIA","PEDRO")
 g.insereAresta("MARIA","JOANA")
 g.insereAresta("PEDRO","JOANA")
 g.insereAresta("PEDRO","LUIZ")
+g.insereAresta("JOANA", "LUIZ")
 
 # print(g.buscaAresta("MARIA", "PEDRO"))
 # g.bus
