@@ -81,7 +81,7 @@ class Grafo():
         for a in self.listaArestas:
             origem = a.origem.getId()
             destino = a.destino
-            if (origem == v) and (destino.visitado == False):
+            if (origem == v.id) and (destino.visitado == False):
                 adj.append(destino)
                 destino.visitado = True
         
@@ -104,21 +104,22 @@ class Grafo():
             stringR += "\n"
         return stringR
     
-    def buscaLarguraVisita(self, vertice):
+    def __buscaLarguraVisita(self, vertice):
         global tempo
         tempo = tempo + 1
-        vertice.Inicio = tempo
+        vertice.entrada = tempo
         vertice.cor = "C"
         adj = self.buscaAdjacentes(vertice)
         for x in adj:
             if x.cor == "B":
                 x.pred = vertice
-                self.buscaLarguraVisita(x)
+                self.__buscaLarguraVisita(x)
         vertice.cor = "P"
         tempo = tempo + 1
         vertice.saida = tempo
 
     def buscaLargura(self):
+        # print("oi")
         for v in self.listaVertices:
             v.cor = "B"        # branco: ainda não foi visitado,
                                # cinza já foi visitado mas ainda não terminou o processo, 
@@ -126,7 +127,16 @@ class Grafo():
             v.pred = None
         for v in self.listaVertices:
             if v.cor == 'B':
-                self.buscaLarguraVisita(v)
+                self.__buscaLarguraVisita(v)
+        
+        for v in self.listaVertices:
+            string = "id: " + str(v.id) + "\n"
+            string += "visitado: " + str(v.visitado) + "\n"
+            string += "entrada: " + str(v.entrada) + "\n"
+            string += "saida: " + str(v.saida) + "\n"
+            string += "cor: " + str(v.cor) + "\n"
+            string += "predecessor: " + str(v.pred) + "\n\n"
+            print(string)
           
 
 g = Grafo()
@@ -139,6 +149,7 @@ g.insereAresta("MARIA","PEDRO")
 g.insereAresta("MARIA","JOANA")
 g.insereAresta("PEDRO","JOANA")
 g.insereAresta("PEDRO","LUIZ")
+g.insereAresta("JOANA", "LUIZ")
 
 # print(g.buscaAresta("MARIA", "PEDRO"))
 # g.bus
@@ -146,6 +157,7 @@ g.insereAresta("PEDRO","LUIZ")
 
 
 print(g)
+
 # adj = g.buscaAdjacentes("PEDRO")
 g.buscaLargura()
 
