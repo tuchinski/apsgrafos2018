@@ -22,11 +22,14 @@ r = requests.get(url = url, params = param)
 dados = r.json()
 dados = dados['response']['groups'][0]['items']
 
+locais = []
+
 for local in dados:
     print(local['venue']['name'])
 
     try:
-        print(local['venue']['location']['address'])
+        # print(local['venue']['location']['address'])
+        locais.append((local['venue']['name'], local['venue']['location']['address']))
         
     except KeyError as identifier:
         print(local['venue']['location']['lat'])
@@ -34,5 +37,9 @@ for local in dados:
         
 
     print('\n')
+
+print('\n\n\n')
+
+print(locais)
 
 # print (len(dados))
